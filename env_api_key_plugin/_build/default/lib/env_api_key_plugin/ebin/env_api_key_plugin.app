@@ -1,0 +1,10 @@
+{application,env_api_key_plugin,
+             [{description,"loads api-key from env"},
+              {vsn,"0.0.1"},
+              {registered,[]},
+              {mod,{env_api_key_plugin_app,[]}},
+              {applications,[kernel,stdlib]},
+              {env,[]},
+              {modules,[env_api_key_plugin_app,env_api_key_plugin_sup]},
+              {licenses,["Apache 2.0"]},
+              {links,[]}]}.

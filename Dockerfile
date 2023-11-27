@@ -4,7 +4,7 @@ RUN apt-get install -y libsnappy-dev
 ENV VERNEMQ=/opt/vernemq
 RUN git clone https://github.com/vernemq/vernemq.git $VERNEMQ
 WORKDIR /opt/vernemq
-RUN git checkout tags/1.12.6.2
+RUN git checkout tags/1.13.0
 RUN make rel
 
 FROM debian:buster-slim
@@ -21,7 +21,7 @@ WORKDIR /vernemq
 ENV DOCKER_VERNEMQ_KUBERNETES_LABEL_SELECTOR="app=vernemq" \
     DOCKER_VERNEMQ_LOG__CONSOLE=console \
     PATH="/vernemq/bin:$PATH" \
-    VERNEMQ_VERSION="1.12.6.2"
+    VERNEMQ_VERSION="1.13.0"
 
 COPY --from=builder /opt/vernemq/_build/default/rel/vernemq /vernemq
 

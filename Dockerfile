@@ -1,3 +1,8 @@
+FROM erlang:23 as plugin
+COPY ./env_api_key_plugin /opt/env_api_key_plugin
+WORKDIR /opt/env_api_key_plugin
+RUN rebar3 compile
+
 FROM erlang:23 as builder
 RUN apt-get update -y
 RUN apt-get install -y libsnappy-dev
@@ -55,7 +60,7 @@ HEALTHCHECK CMD vernemq ping | grep -q pong
 
 # env api plugin
 RUN mkdir /vernemq/plugins
-COPY ./env_api_key_plugin/_build/default /vernemq/plugins/envapikey
+COPY --from=plugin /opt/env_api_key_plugin/_build/default /vernemq/plugins/envapikey
 
 RUN chmod -R o+w /vernemq/plugins
 RUN chmod -R o+r /vernemq/plugins

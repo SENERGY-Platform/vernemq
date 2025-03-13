@@ -1,15 +1,15 @@
-FROM erlang:23 as plugin
+FROM erlang:26 as plugin
 COPY ./env_api_key_plugin /opt/env_api_key_plugin
 WORKDIR /opt/env_api_key_plugin
 RUN rebar3 compile
 
-FROM erlang:23 as builder
+FROM erlang:26 as builder
 RUN apt-get update -y
 RUN apt-get install -y libsnappy-dev
 ENV VERNEMQ=/opt/vernemq
 RUN git clone https://github.com/vernemq/vernemq.git $VERNEMQ
 WORKDIR /opt/vernemq
-RUN git checkout tags/1.13.0
+RUN git checkout tags/2.0.1
 RUN make rel
 
 FROM debian:buster-slim
@@ -26,7 +26,7 @@ WORKDIR /vernemq
 ENV DOCKER_VERNEMQ_KUBERNETES_LABEL_SELECTOR="app=vernemq" \
     DOCKER_VERNEMQ_LOG__CONSOLE=console \
     PATH="/vernemq/bin:$PATH" \
-    VERNEMQ_VERSION="1.13.0"
+    VERNEMQ_VERSION="2.0.1"
 
 COPY --from=builder /opt/vernemq/_build/default/rel/vernemq /vernemq
 

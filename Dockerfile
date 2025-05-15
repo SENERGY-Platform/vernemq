@@ -12,7 +12,7 @@ WORKDIR /opt/vernemq
 RUN git checkout tags/2.0.1
 RUN make rel
 
-FROM debian:buster-slim
+FROM debian:bookworm-slim
 
 RUN apt-get update && \
     apt-get -y install bash procps openssl iproute2 curl jq libsnappy-dev net-tools && \
